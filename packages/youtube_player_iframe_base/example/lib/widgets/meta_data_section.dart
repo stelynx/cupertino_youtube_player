@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:youtube_player_iframe_base/youtube_player_iframe_base.dart';
 
 ///
 class MetaDataSection extends StatelessWidget {
