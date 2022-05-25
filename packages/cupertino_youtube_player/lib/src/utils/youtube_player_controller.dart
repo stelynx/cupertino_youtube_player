@@ -274,7 +274,9 @@ class YoutubePlayerController extends ValueNotifier<YoutubePlayerValue> {
 
   /// Toggles the player's full screen mode.
   void toggleFullScreenMode() {
-    updateValue(value.copyWith(isFullScreen: !value.isFullScreen));
+    if (value.isPlaying) pause();
+    updateValue(value.copyWith(
+        isFullScreen: !value.isFullScreen, position: value.position));
     if (value.isFullScreen) {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
