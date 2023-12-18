@@ -94,7 +94,6 @@ class YoutubePlayerValue {
     Duration? position,
     double? buffered,
     bool? isPlaying,
-    bool? isFullScreen,
     int? volume,
     PlayerState? playerState,
     double? playbackRate,
@@ -111,7 +110,6 @@ class YoutubePlayerValue {
       position: position ?? this.position,
       buffered: buffered ?? this.buffered,
       isPlaying: isPlaying ?? this.isPlaying,
-      isFullScreen: isFullScreen ?? this.isFullScreen,
       volume: volume ?? this.volume,
       playerState: playerState ?? this.playerState,
       playbackRate: playbackRate ?? this.playbackRate,
@@ -178,7 +176,32 @@ class YoutubePlayerController extends ValueNotifier<YoutubePlayerValue> {
 
   /// Updates the old [YoutubePlayerValue] with new one provided.
   // ignore: use_setters_to_change_properties
-  void updateValue(YoutubePlayerValue newValue) => value = newValue;
+  void updateValue(YoutubePlayerValue newValue,
+      {bool updateFullScreen = false}) {
+    print('updating values');
+
+    value = YoutubePlayerValue(
+      isReady: newValue.isReady,
+      isControlsVisible: newValue.isControlsVisible,
+      hasPlayed: newValue.hasPlayed,
+      position: newValue.position,
+      buffered: newValue.buffered,
+      isPlaying: newValue.isPlaying,
+      isFullScreen:
+          updateFullScreen ? newValue.isFullScreen : value.isFullScreen,
+      volume: newValue.volume,
+      playerState: newValue.playerState,
+      playbackRate: newValue.playbackRate,
+      playbackQuality: newValue.playbackQuality,
+      errorCode: newValue.errorCode,
+      webViewController: newValue.webViewController,
+      isDragging: newValue.isDragging,
+      metaData: newValue.metaData,
+    );
+
+    print(value.isFullScreen);
+    // notifyListeners();
+  }
 
   /// Plays the video.
   void play() => _callMethod('play()');
@@ -274,17 +297,28 @@ class YoutubePlayerController extends ValueNotifier<YoutubePlayerValue> {
 
   /// Toggles the player's full screen mode.
   void toggleFullScreenMode() {
+    print('${value.isFullScreen} -> ${!value.isFullScreen}');
     if (value.isPlaying) pause();
-    updateValue(value.copyWith(
-        isFullScreen: !value.isFullScreen, position: value.position));
-    if (value.isFullScreen) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-    } else {
-      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    }
+    updateValue(
+      YoutubePlayerValue(
+        isReady: value.isReady,
+        isControlsVisible: value.isControlsVisible,
+        hasPlayed: value.hasPlayed,
+        position: value.position,
+        buffered: value.buffered,
+        isPlaying: value.isPlaying,
+        isFullScreen: !value.isFullScreen,
+        volume: value.volume,
+        playerState: value.playerState,
+        playbackRate: value.playbackRate,
+        playbackQuality: value.playbackQuality,
+        errorCode: value.errorCode,
+        webViewController: value.webViewController,
+        isDragging: value.isDragging,
+        metaData: value.metaData,
+      ),
+      updateFullScreen: true,
+    );
   }
 
   /// MetaData for the currently loaded or cued video.
@@ -299,7 +333,6 @@ class YoutubePlayerController extends ValueNotifier<YoutubePlayerValue> {
   void reset() => updateValue(
         value.copyWith(
           isReady: false,
-          isFullScreen: false,
           isControlsVisible: false,
           playerState: PlayerState.unknown,
           hasPlayed: false,

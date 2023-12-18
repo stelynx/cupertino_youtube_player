@@ -11,6 +11,8 @@ class FullScreenButton extends StatefulWidget {
   /// Overrides the default [YoutubePlayerController].
   final YoutubePlayerController? controller;
 
+  final VoidCallback? onPressed;
+
   /// Defines color of the button.
   final Color color;
 
@@ -18,6 +20,7 @@ class FullScreenButton extends StatefulWidget {
   FullScreenButton({
     this.controller,
     this.color = CupertinoColors.white,
+    this.onPressed,
   });
 
   @override
@@ -47,7 +50,6 @@ class _FullScreenButtonState extends State<FullScreenButton> {
 
   @override
   void dispose() {
-    _controller.removeListener(listener);
     super.dispose();
   }
 

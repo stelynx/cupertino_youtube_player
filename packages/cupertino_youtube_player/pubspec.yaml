@@ -1,6 +1,6 @@
 name: cupertino_youtube_player
 description: Flutter plugin for playing or streaming inline YouTube videos using the official iFrame player API. This plugin supports both Android and iOS.
-version: 8.0.1
+version: 9.0.1
 repository: https://github.com/stelynx/cupertino_youtube_player
 homepage: https://github.com/stelynx/cupertino_youtube_player/tree/master/packages/cupertino_youtube_player
 
