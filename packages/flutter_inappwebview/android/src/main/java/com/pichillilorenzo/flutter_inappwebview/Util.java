@@ -58,7 +58,7 @@ public class Util {
   private Util() {}
 
   public static String getUrlAsset(InAppWebViewFlutterPlugin plugin, String assetFilePath) throws IOException {
-    String key = (plugin.registrar != null) ? plugin.registrar.lookupKeyForAsset(assetFilePath) : plugin.flutterAssets.getAssetFilePathByName(assetFilePath);
+    String key = plugin.flutterAssets.getAssetFilePathByName(assetFilePath);
     InputStream is = null;
     IOException e = null;
 
@@ -83,7 +83,7 @@ public class Util {
   }
 
   public static InputStream getFileAsset(InAppWebViewFlutterPlugin plugin, String assetFilePath) throws IOException {
-    String key = (plugin.registrar != null) ? plugin.registrar.lookupKeyForAsset(assetFilePath) : plugin.flutterAssets.getAssetFilePathByName(assetFilePath);
+    String key = plugin.flutterAssets.getAssetFilePathByName(assetFilePath);
     AssetManager mg = plugin.applicationContext.getResources().getAssets();
     return mg.open(key);
   }

@@ -16,10 +16,9 @@ import com.pichillilorenzo.flutter_inappwebview.headless_in_app_webview.Headless
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.BinaryMessenger;
-import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.platform.PlatformViewRegistry;
-import io.flutter.view.FlutterView;
+import io.flutter.embedding.android.FlutterView;
 
 public class InAppWebViewFlutterPlugin implements FlutterPlugin, ActivityAware {
 
@@ -40,7 +39,6 @@ public class InAppWebViewFlutterPlugin implements FlutterPlugin, ActivityAware {
   public static ValueCallback<Uri[]> filePathCallback;
 
   public Context applicationContext;
-  public PluginRegistry.Registrar registrar;
   public BinaryMessenger messenger;
   public FlutterPlugin.FlutterAssets flutterAssets;
   @Nullable
@@ -51,14 +49,6 @@ public class InAppWebViewFlutterPlugin implements FlutterPlugin, ActivityAware {
   public FlutterView flutterView;
 
   public InAppWebViewFlutterPlugin() {}
-
-  @SuppressWarnings("deprecation")
-  public static void registerWith(PluginRegistry.Registrar registrar) {
-    final InAppWebViewFlutterPlugin instance = new InAppWebViewFlutterPlugin();
-    instance.registrar = registrar;
-    instance.onAttachedToEngine(
-            registrar.context(), registrar.messenger(), registrar.activity(), registrar.platformViewRegistry(), registrar.view());
-  }
 
   @Override
   public void onAttachedToEngine(FlutterPluginBinding binding) {
